@@ -5,7 +5,7 @@ const router = express.Router();
 
 //create
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
 
     const newHotel = new Hotel(req.body);
 
@@ -13,13 +13,13 @@ router.post("/", async (req, res) => {
         const savedHotel = await newHotel.save()
         res.status(200).json(savedHotel);
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
 //update
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", async (req, res, next) => {
 
     try{ 
         const updatedHotel = await Hotel.findByIdAndUpdate(
@@ -29,13 +29,13 @@ router.put("/:id", async (req, res) => {
             );
         res.status(200).json(updatedHotel);
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
 //delete
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
 
     try{ 
         await Hotel.findByIdAndDelete(
@@ -43,13 +43,13 @@ router.delete("/:id", async (req, res) => {
             );
         res.status(200).json("Hotel has been deleted");
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
 //get
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
 
     try{ 
         const hotel = await Hotel.findById(
@@ -57,19 +57,19 @@ router.get("/:id", async (req, res) => {
             );
         res.status(200).json(hotel);
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
 //getAll
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 
     try{ 
         const hotels = await Hotel.find();
         res.status(200).json(hotels);
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 

@@ -34,7 +34,18 @@ app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 
+//error handler middleware
 
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500; 
+    const errorMessage = err.message || "Something went wrong!";
+    return res.status(500).json({
+        success: false, 
+        status: errorStatus, 
+        message: errorMessage,
+        stack: err.stack
+    });
+})
 
 app.get("/", (req, res) => {
     res.send("hello first request!");

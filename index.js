@@ -1,12 +1,14 @@
 import express from "express"; 
-const app = express();
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoute from './routes/auth.js';
 import usersRoute from './routes/users.js';
 import hotelsRoute from './routes/hotels.js';
 import roomsRoute from './routes/rooms.js';
+import cookieParser from 'cookie-parser'
 
+
+const app = express();
 dotenv.config()
 
 const connect = async() => {
@@ -26,9 +28,11 @@ mongoose.connection.on("connected", () => {
     console.log("mongoDB connected");
 });
 
+//middlewares
+
+app.use(cookieParser());
 app.use(express.json());
 
-//middlewares
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);

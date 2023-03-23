@@ -1,5 +1,5 @@
 import express from "express"; 
-import { createHotel, deleteHotel, getAllHotels, getHotel, updateHotel } from "../controllers/hotel.controller.js";
+import { countByCity, createHotel, deleteHotel, getAllHotels, getHotel, updateHotel } from "../controllers/hotel.controller.js";
 import Hotel from "../models/Hotel.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 
@@ -11,18 +11,22 @@ router.post("/", verifyAdmin, createHotel);
 
 //update
 
-router.put("/:id", verifyAdmin, updateHotel);
+router.put("/find/:id", verifyAdmin, updateHotel);
 
 //delete
 
-router.delete("/:id", verifyAdmin, deleteHotel);
+router.delete("/find/:id", verifyAdmin, deleteHotel);
 
 //get
 
-router.get("/:id", getHotel);
+router.get("/find/:id", getHotel);
 
 //getAll
 
 router.get("/", getAllHotels);
+
+//countByCity
+router.get("/countByCity", countByCity);
+router.get("/countByCity", countByCity);
 
 export default router
